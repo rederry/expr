@@ -85,6 +85,13 @@ func slice(array, from, to interface{}) interface{} {
 	panic(fmt.Sprintf("cannot slice %v", from))
 }
 
+// from must have type of `map[string]interface{}`
+// functions in from must have type of `func(...interface{}) interface{}`
+func FetchFnFast(from interface{}, name string) interface{} {
+	env := from.(map[string]interface{})
+	return env[name]
+}
+
 func FetchFn(from interface{}, name string) reflect.Value {
 	v := reflect.ValueOf(from)
 

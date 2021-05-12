@@ -154,19 +154,15 @@ func Benchmark_call(b *testing.B) {
 }
 
 func Benchmark_callFast(b *testing.B) {
-	type Env struct {
-		Fn func(...interface{}) interface{}
-	}
-
-	program, err := expr.Compile(`Fn("a", "b", "ab")`, expr.Env(Env{}))
-	if err != nil {
-		b.Fatal(err)
-	}
-
-	env := Env{
-		Fn: func(s ...interface{}) interface{} {
+	env := map[string]interface{}{
+		"Fn": func(s ...interface{}) interface{} {
 			return s[0].(string)+s[1].(string) == s[2].(string)
 		},
+	}
+
+	program, err := expr.Compile(`Fn("a", "b", "ab")`, expr.Env(env))
+	if err != nil {
+		b.Fatal(err)
 	}
 
 	for n := 0; n < b.N; n++ {

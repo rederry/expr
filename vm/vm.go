@@ -290,7 +290,8 @@ func (vm *VM) Run(program *Program, env interface{}) (out interface{}, err error
 			for i := call.Size - 1; i >= 0; i-- {
 				in[i] = vm.pop()
 			}
-			fn := FetchFn(env, call.Name).Interface()
+			//fn := FetchFn(env, call.Name).Interface()
+			fn := FetchFnFast(env, call.Name)
 			vm.push(fn.(func(...interface{}) interface{})(in...))
 
 		case OpMethod:

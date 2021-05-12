@@ -1169,6 +1169,24 @@ func TestIssue138(t *testing.T) {
 	require.Error(t, err)
 }
 
+func TestExprAdd(t *testing.T) {
+	env := map[string]interface{}{
+		"add": func(args ...interface{}) interface{} {
+			return args[0].(float64) + args[1].(float64)
+		},
+	}
+
+	code := `add(1.0, 2.0)`
+
+	program, err := expr.Compile(code, expr.Env(env))
+	require.NoError(t, err)
+
+	output, err := expr.Run(program, env)
+	require.NoError(t, err)
+
+	require.Equal(t, 3.0, output)
+}
+
 //
 // Mock types
 //
