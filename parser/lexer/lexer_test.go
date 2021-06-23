@@ -64,6 +64,23 @@ var lexTests = []lexTest{
 		},
 	},
 	{
+		"a and orb().val and foo?.bar",
+		[]Token{
+			{Kind: Identifier, Value: "a"},
+			{Kind: Operator, Value: "and"},
+			{Kind: Identifier, Value: "orb"},
+			{Kind: Bracket, Value: "("},
+			{Kind: Bracket, Value: ")"},
+			{Kind: Operator, Value: "."},
+			{Kind: Identifier, Value: "val"},
+			{Kind: Operator, Value: "and"},
+			{Kind: Identifier, Value: "foo"},
+			{Kind: Operator, Value: "?."},
+			{Kind: Identifier, Value: "bar"},
+			{Kind: EOF},
+		},
+	},
+	{
 		`not in not abc not i not(false) not  in not   in`,
 		[]Token{
 			{Kind: Operator, Value: "not in"},
@@ -76,6 +93,21 @@ var lexTests = []lexTest{
 			{Kind: Identifier, Value: "false"},
 			{Kind: Bracket, Value: ")"},
 			{Kind: Operator, Value: "not in"},
+			{Kind: Operator, Value: "not in"},
+			{Kind: EOF},
+		},
+	},
+	{
+		"not in_var",
+		[]Token{
+			{Kind: Operator, Value: "not"},
+			{Kind: Identifier, Value: "in_var"},
+			{Kind: EOF},
+		},
+	},
+	{
+		"not in",
+		[]Token{
 			{Kind: Operator, Value: "not in"},
 			{Kind: EOF},
 		},
